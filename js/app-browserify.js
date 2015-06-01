@@ -24,3 +24,23 @@ var Promise = require('es6-promise').Promise
     // new Router()
 // }
 
+var clock = () => {
+    var d = new Date();
+    var clockText = `${d.getHours()}:${ d.getMinutes()}:${ d.getSeconds()}`
+    var correctminutes = (d.getMinutes().toString().length==1) ? "0" + d.getMinutes():d.getMinutes()
+    var correctseconds = (d.getSeconds().toString().length==1) ? "0" + d.getSeconds():d.getSeconds()
+    var clocksuccess = `${d.getHours()}:${correctminutes}:${correctseconds}`
+    document.querySelector(".time").innerHTML = clocksuccess;    
+
+    var HMS = [d.getHours(), d.getMinutes(), d.getSeconds()]
+    var range = [24, 60, 60]
+    var values = HMS.map((v, i) => Math.floor(v / range[i] * 255))
+    var color = `rgb(${values.join(',')})`
+    document.body.style['background'] = color
+    var S = `${3*d.getSeconds()}px`
+    document.body.querySelector('hr').style['width'] = S
+
+document.querySelector(".time2").innerHTML =  values.map((v) => v.toString(16)).join(':');
+    
+}
+setInterval(clock, 1000)
